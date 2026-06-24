@@ -1,0 +1,58 @@
+{
+  "compilerOptions": {
+    /* 1. File Layout & Boundaries */
+    "rootDir": "./src",
+    "outDir": "./dist",
+
+    /* 2. Modern Runtime & Environment Engine */
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "moduleDetection": "force",
+    "types": ["node"],
+
+    /* 3. Strict Type-Checking Guardrails */
+    "strict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true /* Crucial: Protects arrays/objects from accessing undefined indexes */,
+
+    /* 4. Code Quality & Resource Optimization */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* 5. Production Output Compilation Options */
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    /* 6. Modern Interoperability & Optimization Guardrails */
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "verbatimModuleSyntax": true /* Ensures safe, performant ESM import/export behaviors */,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+
+    /* 7. Production-grade Absolute Path Alignment (Aliases) */
+
+    "paths": {
+      "#config/*": ["./src/config/*"],
+      "#controllers/*": ["./src/controllers/*"],
+      "#dtos/*": ["./src/dtos/*"],
+      "#errors/*": ["./src/errors/*"],
+      "#middlewares/*": ["./src/middlewares/*"],
+      "#models/*": ["./src/models/*"],
+      "#routes/*": ["./src/routes/*"],
+      "#utils/*": ["./src/utils/*"],
+      "#types/*": ["./src/types/*"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts"]
+}
