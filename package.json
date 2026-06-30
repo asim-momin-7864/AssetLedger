@@ -30,7 +30,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/asim-momin-7864/AssetLedger/issues"
   },
