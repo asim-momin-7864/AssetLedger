@@ -36,4 +36,4 @@ if (env.NODE_ENV === 'development') {
   };
 }
 
-export const logger = pino(loggerOptions);
+export const baseLogger = pino(loggerOptions);
