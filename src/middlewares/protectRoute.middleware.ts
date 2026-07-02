@@ -33,10 +33,12 @@ export const protectRoute = (req: Request, _res: Response, next: NextFunction): 
 
     next();
   } catch (error: unknown) {
+    // jwt error
     if (error instanceof Error && error.name === 'TokenExpiredError') {
       throw new AppError('Unauthorized - Token Expired', 401);
     }
 
+    // unhandled error
     throw new AppError('Unauthorized - Invalid Token', 401);
   }
 };
