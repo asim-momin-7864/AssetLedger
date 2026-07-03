@@ -16,6 +16,9 @@ import { AppError } from '#errors/AppError.js';
 import { globalErrorHandler } from '#middlewares/error.middleware.js';
 import { apiLimiter } from '#middlewares/rateLimiter.middleware.js';
 
+// routers
+import authRouter from '#routes/auth.routes.js';
+
 const app: Application = express();
 
 // security
@@ -32,8 +35,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // cookie reader
 app.use(cookieParser());
-
-//
 
 // middleware to generate req ID and create isolated thread
 app.use(
@@ -80,7 +81,8 @@ app.get('/api/v1/health', (_req, res) => {
   });
 });
 
-//
+// business routes
+app.use('/api/v1/auth', authRouter);
 
 // Unhandled route fallbacks
 app.all('/{*splat}', (req, _res, next) => {
