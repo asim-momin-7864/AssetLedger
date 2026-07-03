@@ -11,7 +11,7 @@ dotenv.config();
 const envSchema = z.object({
   PORT: z.string().default('5000'),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  MONGO_URL: z.string({ error: 'MONGO_URL is required' }),
+  MONGO_URI: z.string({ error: 'MONGO_URI is required' }),
   JWT_SECRET: z.string({ error: 'JWT_string is required' }),
   JWT_EXPIRES_IN: z.string().default('7d') as unknown as z.ZodType<jwt.SignOptions['expiresIn']>,
 });
@@ -26,9 +26,6 @@ if (!_env.success) {
   const readableError = fromZodError(_env.error);
   console.error('Invalid environment variables: ', readableError);
   process.exit(1);
-
-  // error in terminal
-  console.error(readableError.message);
 }
 
 // export parses variables
