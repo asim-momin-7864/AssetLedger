@@ -8,6 +8,7 @@ import { AppError } from '#errors/AppError.js';
 // shape of decoded JWT
 interface DecodedToken extends JwtPayload {
   userId: string;
+  role: 'EMPLOYEE' | 'IT_ADMIN';
 }
 
 export const protectRoute = (req: Request, _res: Response, next: NextFunction): void => {
@@ -29,6 +30,7 @@ export const protectRoute = (req: Request, _res: Response, next: NextFunction): 
     // attched userId to request
     req.user = {
       _id: decoded.userId,
+      role: decoded.role,
     };
 
     next();
