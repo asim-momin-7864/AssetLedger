@@ -88,6 +88,7 @@ app.use('/api/v1/auth', authRouter);
 app.all('/{*splat}', (req, _res, next) => {
   const err = new AppError(`The path ${req.originalUrl} does not exist on this server.`, 404);
   next(err);
+  //! here insted send res, not error
 });
 
 // Global error handler
