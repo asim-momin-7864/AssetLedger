@@ -16,7 +16,7 @@ export const protectRoute = (req: Request, _res: Response, next: NextFunction): 
   const token = req.cookies?.jwt;
 
   if (!token) {
-    throw new AppError('Unauthorized - Invalid Token Payload', 401);
+    return next(new AppError('Unauthorized - Invalid Token Payload', 401));
   }
 
   try {
@@ -24,7 +24,7 @@ export const protectRoute = (req: Request, _res: Response, next: NextFunction): 
     const decoded = jwt.verify(token, env.JWT_SECRET) as DecodedToken;
 
     if (!decoded || !decoded.userId) {
-      throw new AppError('Unauthorized - Invalid Token Payload', 401);
+      return next(new AppError('Unauthorized - Invalid Token Payload', 401));
     }
 
     // attched userId to request
@@ -37,10 +37,10 @@ export const protectRoute = (req: Request, _res: Response, next: NextFunction): 
   } catch (error: unknown) {
     // jwt error
     if (error instanceof Error && error.name === 'TokenExpiredError') {
-      throw new AppError('Unauthorized - Token Expired', 401);
+      return next(new AppError('Unauthorized - Token Expired', 401));
     }
 
     // unhandled error
-    throw new AppError('Unauthorized - Invalid Token', 401);
+    return next(new AppError('Unauthorized - Invalid Token', 401));
   }
 };
