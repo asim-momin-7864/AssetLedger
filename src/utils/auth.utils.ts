@@ -8,8 +8,14 @@ import { env } from '#config/env.config.js';
 // signOption type
 type SignOptionsExpiresIn = NonNullable<jwt.SignOptions['expiresIn']>;
 
-export const generateTokenAndSetCookie = (userId: string, res: Response): void => {
-  const token = jwt.sign({ userId }, env.JWT_SECRET, {
+// type payload
+interface TokenPayload {
+  userId: string;
+  role: 'EMPLOYEE' | 'IT_ADMIN';
+}
+
+export const generateTokenAndSetCookie = ({ userId, role }: TokenPayload, res: Response): void => {
+  const token = jwt.sign({ userId, role }, env.JWT_SECRET, {
     expiresIn: env.JWT_EXPIRES_IN as SignOptionsExpiresIn,
   });
 

@@ -23,6 +23,8 @@ export const protectRoute = (req: Request, _res: Response, next: NextFunction): 
     // verify
     const decoded = jwt.verify(token, env.JWT_SECRET) as DecodedToken;
 
+    // console.log('decoded:', decoded);
+
     if (!decoded || !decoded.userId) {
       return next(new AppError('Unauthorized - Invalid Token Payload', 401));
     }
