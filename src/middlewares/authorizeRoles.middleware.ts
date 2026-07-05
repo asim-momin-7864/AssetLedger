@@ -12,13 +12,19 @@ To bypass this rule, you wrap the middleware inside a parent function that accep
 export const authorizeRoles = (...allowedRoles: string[]) => {
   // the middleware func
   return (req: Request, _res: Response, next: NextFunction): void => {
+    // console.log('User Role:', req.user?.role);
+    // console.log('Allowed Roles:', allowedRoles);
+
     // user is valid
     if (!req.user) {
       return next(new AppError('Authentication Required', 401));
     }
 
     // is role allowed
-    if (allowedRoles.includes(req.user.role)) {
+    const isAuthorized = allowedRoles.includes(req.user.role);
+    // console.log('isAuthorized: ', isAuthorized);
+
+    if (!isAuthorized) {
       return next(new AppError('You do not have permission to perform this action', 403));
     }
 
