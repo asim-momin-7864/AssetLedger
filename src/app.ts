@@ -18,6 +18,7 @@ import { apiLimiter } from '#middlewares/rateLimiter.middleware.js';
 
 // routers
 import authRouter from '#routes/auth.routes.js';
+import assetRouter from '#routes/asset.routes.js';
 
 const app: Application = express();
 
@@ -83,6 +84,7 @@ app.get('/api/v1/health', (_req, res) => {
 
 // business routes
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/asset', assetRouter);
 
 // Unhandled route fallbacks
 app.all('/{*splat}', (req, _res, next) => {
