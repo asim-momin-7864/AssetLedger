@@ -53,6 +53,12 @@ export const globalErrorHandler: ErrorRequestHandler = (
       message: err.message,
     });
 
+    // for frontend,
+    res.status(err.statusCode).json({
+      success: false,
+      error: err.status,
+      message: err.message,
+    });
     return;
   }
 
