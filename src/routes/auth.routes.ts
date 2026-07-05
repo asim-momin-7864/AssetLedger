@@ -11,7 +11,7 @@ router.post('/register', authLimiter, register);
 router.post('/login', authLimiter, login);
 
 // protected route
-router.post('/logout', protectRoute, logout);
+router.get('/logout', protectRoute, logout);
 
 // export
 export default router;
