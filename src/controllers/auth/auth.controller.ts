@@ -32,7 +32,7 @@ export const register = async (req: Request<unknown, unknown, RegisterInput>, re
   const user = await User.create(validatedData);
 
   // generate JWT token and set in cookie
-  generateTokenAndSetCookie(user.id, res);
+  generateTokenAndSetCookie({ userId: user.id, role: user.role }, res);
 
   // log
   logger.info({ userId: user._id, email: user.email }, 'New user account successfully created');
@@ -66,7 +66,7 @@ export const login = async (req: Request<unknown, unknown, LoginInput>, res: Res
   }
 
   // generate token
-  generateTokenAndSetCookie(user.id, res);
+  generateTokenAndSetCookie({ userId: user.id, role: user.role }, res);
 
   // log
   logger.info({ userId: user._id }, 'User successfully authenticated and logged in');
