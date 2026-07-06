@@ -50,3 +50,23 @@ export const createAssetController = async (
     },
   });
 };
+
+// get all assets
+export const allAssetsController = async (req: Request, res: Response) => {
+  // quer
+  const { status } = req.query;
+  // type safe filter object
+  const filter: Record<string, unknown> = {};
+
+  // if query exist and is plain string before adding to the query
+  if (status && typeof status === 'string') {
+    filter.status = status;
+  }
+
+  const allAssets = await Asset.find(filter).populate('assignedTo', ['name', 'email']);
+
+  res.status(200).json({
+    success: true,
+    data: allAssets,
+  });
+};
