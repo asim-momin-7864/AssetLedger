@@ -6,6 +6,7 @@ import {
   CreateAssetSchema,
   // UpdateAssetSchema,
   CreateAssetInput,
+  UpdateAssetFieldsInput,
   // UpdateAssetInput,
 } from '#dtos/asset.dto.js';
 import { getLogger } from 'pino-correlation-id';
@@ -68,5 +69,37 @@ export const allAssetsController = async (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
     data: allAssets,
+  });
+};
+
+// params type
+interface AssetParams {
+  id: string;
+}
+
+// update asset fields
+export const updateAssetFieldsController = async (
+  req: Request<AssetParams, unknown, UpdateAssetFieldsInput>,
+  res: Response
+) => {
+  // grab id
+  const assetId = req.params.id;
+
+  // find - exist
+  const assetExists = await Asset.findOne({ _id: assetId });
+
+  if (!assetExists) {
+    throw new AppError('This named asset dont exist', 404);
+  }
+
+  // changes
+  Object.assign(assetExists, req.body);
+
+  // save
+  await assetExists.save();
+
+  res.status(200).json({
+    success: true,
+    data: assetExists,
   });
 };
