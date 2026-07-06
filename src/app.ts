@@ -84,7 +84,7 @@ app.get('/api/v1/health', (_req, res) => {
 
 // business routes
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/asset', assetRouter);
+app.use('/api/v1/assets', assetRouter);
 
 // Unhandled route fallbacks
 app.all('/{*splat}', (req, _res, next) => {
