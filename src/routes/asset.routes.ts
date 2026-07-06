@@ -6,6 +6,7 @@ import {
   createAssetController,
   allAssetsController,
   updateAssetFieldsController,
+  deleteAssetController,
 } from '#controllers/asset/asset.controller.js';
 import { RequestHandler } from 'express';
 
@@ -26,6 +27,13 @@ router.patch(
   '/:id',
   authorizeRoles('IT_ADMIN'),
   updateAssetFieldsController as unknown as RequestHandler
+);
+
+//delete
+router.delete(
+  '/:id',
+  authorizeRoles('IT_ADMIN'),
+  deleteAssetController as unknown as RequestHandler
 );
 
 export default router;

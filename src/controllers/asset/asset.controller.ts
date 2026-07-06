@@ -89,7 +89,7 @@ export const updateAssetFieldsController = async (
   const assetExists = await Asset.findOne({ _id: assetId });
 
   if (!assetExists) {
-    throw new AppError('This named asset dont exist', 404);
+    throw new AppError(`The asset with id: ${assetId} dont exist`, 404);
   }
 
   // changes
@@ -101,5 +101,40 @@ export const updateAssetFieldsController = async (
   res.status(200).json({
     success: true,
     data: assetExists,
+  });
+};
+
+// delete
+export const deleteAssetController = async (
+  req: Request<AssetParams, unknown, unknown>,
+  res: Response
+) => {
+  const assetId = req.params.id;
+
+  const assetExists = await Asset.findOne({
+    _id: assetId,
+  });
+
+  if (!assetExists) {
+    throw new AppError(`The asset with id: ${assetId} dont exists`, 404);
+  }
+
+  // check if it is assigned to anyone
+  if (assetExists.assignedTo !== null) {
+    throw new AppError(
+      `The asset with id:${assetId} is assigned to a employee so cannot delete it.`,
+      403
+    );
+  }
+
+  // delete
+  await Asset.deleteOne({ _id: assetId });
+
+  //log
+
+  //res
+  res.status(200).json({
+    success: true,
+    message: `Asset with id: ${assetId} is deleted successfully`,
   });
 };
