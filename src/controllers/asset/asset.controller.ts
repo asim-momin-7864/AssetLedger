@@ -4,10 +4,9 @@ import { Asset } from '#models/asset.model.js';
 import { AppError } from '#errors/AppError.js';
 import {
   CreateAssetSchema,
-  // UpdateAssetSchema,
   CreateAssetInput,
   UpdateAssetFieldsInput,
-  // UpdateAssetInput,
+  UpdateAssetFieldsSchema,
 } from '#dtos/asset.dto.js';
 import { getLogger } from 'pino-correlation-id';
 import { baseLogger } from '#utils/logger.js';
@@ -82,6 +81,9 @@ export const updateAssetFieldsController = async (
   req: Request<AssetParams, unknown, UpdateAssetFieldsInput>,
   res: Response
 ) => {
+  // validate
+  const validatedData = UpdateAssetFieldsSchema.parse(req.body);
+
   // grab id
   const assetId = req.params.id;
 
@@ -93,7 +95,7 @@ export const updateAssetFieldsController = async (
   }
 
   // changes
-  Object.assign(assetExists, req.body);
+  Object.assign(assetExists, validatedData);
 
   // save
   await assetExists.save();
@@ -109,6 +111,9 @@ export const deleteAssetController = async (
   req: Request<AssetParams, unknown, unknown>,
   res: Response
 ) => {
+  // logger
+  const logger = getLogger(baseLogger);
+
   const assetId = req.params.id;
 
   const assetExists = await Asset.findOne({
@@ -131,6 +136,13 @@ export const deleteAssetController = async (
   await Asset.deleteOne({ _id: assetId });
 
   //log
+  logger.info(
+    {
+      name: assetExists.name,
+      serialNumber: assetExists.serialNumber,
+    },
+    'This asset is deleted successfully from system.'
+  );
 
   //res
   res.status(200).json({
