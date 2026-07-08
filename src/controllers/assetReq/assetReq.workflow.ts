@@ -130,7 +130,7 @@ export const recoverAssetController = async (req: Request, res: Response) => {
 
   // res
   res.status(200).json({
-    succes: true,
+    success: true,
     message: `The asset: ${assetExist.name} and serial number ${assetExist.serialNumber} is successfully recovered`,
   });
 };
