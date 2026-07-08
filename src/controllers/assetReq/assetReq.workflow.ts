@@ -7,6 +7,7 @@ import { AppError } from '#errors/AppError.js';
 // import { baseLogger } from '#utils/logger.js';
 import type { Request, Response } from 'express';
 import { Types } from 'mongoose';
+import { createAuditLog } from '#utils/auditLog.js';
 
 // reject asset request
 export const rejectAssetReqController = async (req: Request, res: Response) => {
@@ -28,6 +29,15 @@ export const rejectAssetReqController = async (req: Request, res: Response) => {
   assetReq.status = 'REJECTED';
   await assetReq.save();
 
+  // Audit log
+  await createAuditLog({
+    action: 'REQUEST_REJECTED',
+    performedBy: req.user!._id,
+    targetId: assetReq._id,
+    targetModel: 'AssetReq',
+    details: `Asset Request ${assetReq.requestedItem} is rejected`,
+  });
+
   res.status(200).json({
     success: true,
     message: `The Request:${assetReq.requestedItem} by ${assetReq.requesterId} is rejected by IT_ADMIN`,
@@ -39,12 +49,8 @@ export const fullfillAssetReqController = async (req: Request, res: Response) =>
   // check params
   const assetReqId = req.params.id;
 
-  //TEST
-
   //TODO status guard - check requests only be 'PENDING'
   const assetReq = await AssetReq.findById(assetReqId).populate('requesterId', ['name', 'email']);
-
-  console.log('assetReq ==> ', assetReq);
 
   if (!assetReq) {
     throw new AppError('The request is not exists', 404);
@@ -99,6 +105,15 @@ export const fullfillAssetReqController = async (req: Request, res: Response) =>
 
   const requester = assetReq.requesterId as unknown as PopulatedUser;
 
+  // Audit log
+  await createAuditLog({
+    action: 'REQUEST_APPROVED',
+    performedBy: req.user!._id,
+    targetId: assetReq._id,
+    targetModel: 'AssetReq',
+    details: `Asset request: ${assetReq._id} is approved by Admin, Asset: ${asset._id} assigned to Empoyee`,
+  });
+
   // res
   res.status(200).json({
     success: true,
@@ -127,6 +142,15 @@ export const recoverAssetController = async (req: Request, res: Response) => {
   assetExist.assignedTo = null;
   assetExist.status = 'AVAILABLE';
   await assetExist.save();
+
+  // Audit log
+  await createAuditLog({
+    action: 'ASSET_RECOVERED',
+    performedBy: req.user!._id,
+    targetId: assetExist._id,
+    targetModel: 'Asset',
+    details: `Asset: ${assetExist._id} is recover by Admin`,
+  });
 
   // res
   res.status(200).json({

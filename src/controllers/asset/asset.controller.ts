@@ -11,6 +11,9 @@ import {
 import { getLogger } from 'pino-correlation-id';
 import { baseLogger } from '#utils/logger.js';
 
+// audit
+import { createAuditLog } from '#utils/auditLog.js';
+
 // create asset
 export const createAssetController = async (
   req: Request<unknown, unknown, CreateAssetInput>,
@@ -38,6 +41,15 @@ export const createAssetController = async (
     { name: newAsset.name, serialNumber: newAsset.serialNumber, type: newAsset.type },
     `New asset is successfully added into inventory`
   );
+
+  // Audit log generation
+  await createAuditLog({
+    action: 'ASSET_CREATED',
+    performedBy: req.user!._id,
+    targetId: newAsset._id,
+    targetModel: 'Asset',
+    details: `Asset ${newAsset.name} (S/N: ${newAsset.serialNumber}) was added into inventory`,
+  });
 
   // res
   res.status(201).json({
