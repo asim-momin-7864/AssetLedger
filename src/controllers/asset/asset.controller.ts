@@ -51,15 +51,24 @@ export const createAssetController = async (
   });
 };
 
+// type guard for params
+type AssetStatus = 'AVAILABLE' | 'ASSIGNED' | 'MAINTENANCE';
+
+// type guard func
+const isValidStatus = (status: unknown): status is AssetStatus => {
+  return typeof status === 'string' && ['AVAILABLE', 'ASSIGNED', 'MAINTENANCE'].includes(status);
+};
+
 // get all assets
 export const allAssetsController = async (req: Request, res: Response) => {
-  // quer
+  // query
   const { status } = req.query;
-  // type safe filter object
-  const filter: Record<string, unknown> = {};
 
-  // if query exist and is plain string before adding to the query
-  if (status && typeof status === 'string') {
+  // filter type & delcare
+  const filter: { status?: AssetStatus } = {};
+
+  // check
+  if (isValidStatus(status)) {
     filter.status = status;
   }
 
