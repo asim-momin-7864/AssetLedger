@@ -1,0 +1,403 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Asset Ledger Tracker
+meta:
+  id: wrk_13e17db4e08e4e9ea7d2044a75d10a14
+  created: 1783106623763
+  modified: 1783244327268
+  description: ""
+collection:
+  - url: "{{ _.baseUrl }}/health"
+    name: Health
+    meta:
+      id: req_2aa8fa43219b44f59572efe71e77c480
+      created: 1783106644801
+      modified: 1783244506522
+      isPrivate: false
+      description: ""
+      sortKey: -1783106644801
+    method: GET
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - name: Auth
+    meta:
+      id: fld_3c12eef30ed44c9abcfe865b4f4f905d
+      created: 1783244339587
+      modified: 1783244638990
+      sortKey: -1783244339587
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/auth/register"
+        name: Register
+        meta:
+          id: req_5d720bba7da64f889bcb082b8a7325c1
+          created: 1783107192924
+          modified: 1783263875688
+          isPrivate: false
+          description: ""
+          sortKey: -1783244383087
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"name": "user12",
+            	"email": "user12@gmail.com",
+            	"role": "EMPLOYEE",
+            	"password": "1234567890"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/auth/login"
+        name: Login
+        meta:
+          id: req_829725dc735643f8887799ceb2cdfa3f
+          created: 1783244406943
+          modified: 1783602705721
+          isPrivate: false
+          description: ""
+          sortKey: -1783244406943
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"email": "admin77@gmail.com",
+            	"password": "1234567890"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/auth/logout"
+        name: Logout
+        meta:
+          id: req_44c18b1a4f904c738b527667548c16e1
+          created: 1783244648316
+          modified: 1783244712542
+          isPrivate: false
+          description: ""
+          sortKey: -1783244382987
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Asset (basic CRUD ) for IT_ADMIN
+    meta:
+      id: fld_8d01095d8131456abc7bd0e6a29c3268
+      created: 1783262847253
+      modified: 1783340171634
+      sortKey: -1783262847253
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/assets/"
+        name: Create Asset
+        meta:
+          id: req_a6fcd5d9a2d34e729f9f5dfb0e498253
+          created: 1783262850633
+          modified: 1783542517156
+          isPrivate: false
+          description: ""
+          sortKey: -1783262850633
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "name": "iPad Pro 11-inch",
+                "type": "HARDWARE",
+                "serialNumber": "IPD-2024-001"
+              }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/assets"
+        name: All assets
+        meta:
+          id: req_72cbcd2ad0354c1a916818e1e5f059fb
+          created: 1783327471780
+          modified: 1783337661649
+          isPrivate: false
+          description: ""
+          sortKey: -1783327471780
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/assets/6a4a7225cbbce4ee481ec11e"
+        name: Update Asset
+        meta:
+          id: req_2a08881ad75a49fc9994dcf54dcd41d5
+          created: 1783337468689
+          modified: 1783540748234
+          isPrivate: false
+          description: ""
+          sortKey: -1783253628788
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "name": "JetBrains All Products PRO Pack License"
+              }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/assets/6a4b9b787add20debe620402"
+        name: Delete Asset
+        meta:
+          id: req_11177b13662d4d95bcf8c357d60de3ba
+          created: 1783340174081
+          modified: 1783340204355
+          isPrivate: false
+          description: ""
+          sortKey: -1783340174081
+        method: DELETE
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Asset Request - Employee
+    meta:
+      id: fld_2d03c461b80b426c9f1389bccd906e5f
+      created: 1783443795540
+      modified: 1783519038768
+      sortKey: -1783443795540
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/requests"
+        name: Create Asset Request
+        meta:
+          id: req_fe6c735f570648cc909528d5138ebd72
+          created: 1783443798693
+          modified: 1783602694550
+          isPrivate: false
+          description: ""
+          sortKey: -1783443798693
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"requestedItem": "Dell UltraSharp 32-inch 4K Monitor"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/requests/my-requests"
+        name: My Requests
+        meta:
+          id: req_1041d1521ab14a03abcf977912630928
+          created: 1783519045495
+          modified: 1783519798710
+          isPrivate: false
+          description: ""
+          sortKey: -1783519045495
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Asset Requests - IT Admin
+    meta:
+      id: fld_fd05d04d67d3483a84f0924723e57b00
+      created: 1783519679506
+      modified: 1783519679506
+      sortKey: -1783519679506
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/requests"
+        name: All Asset Requests
+        meta:
+          id: req_7efa274f5c5f481aaaece359c37d57d3
+          created: 1783519683889
+          modified: 1783528524370
+          isPrivate: false
+          description: ""
+          sortKey: -1783519683889
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/requests/6a4e7ab8b7f86b72062ac13e/reject"
+        name: Reject Request
+        meta:
+          id: req_d4fbcba2bba242ac96951a59a4e23db6
+          created: 1783527712432
+          modified: 1783542674778
+          isPrivate: false
+          description: ""
+          sortKey: -1783527712432
+        method: PATCH
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/requests/6a4fa4621dab6e3d38c2acca/fullfill"
+        name: Fullfill Request
+        meta:
+          id: req_f2978dd278b94362883098a9827e63d4
+          created: 1783528286871
+          modified: 1783604471783
+          isPrivate: false
+          description: ""
+          sortKey: -1783528286871
+        method: PATCH
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"assetId": "6a4a7187cbbce4ee481ec11c"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: "{{ _.baseUrl }}/requests/6a4a7187cbbce4ee481ec11c/recover"
+        name: Recover Request
+        meta:
+          id: req_5e506edc0ed743a2ba5a356bd271997a
+          created: 1783530477100
+          modified: 1783604417181
+          isPrivate: false
+          description: ""
+          sortKey: -1783530477100
+        method: PATCH
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Audit Logs
+    meta:
+      id: fld_2d54a16404b244a6874984068b527b79
+      created: 1783543288776
+      modified: 1783543288776
+      sortKey: -1783543288776
+      description: ""
+    children:
+      - url: "{{ _.baseUrl }}/audit-logs"
+        name: Audit Logs
+        meta:
+          id: req_a0614b3d645b4f119f66d87bb1d28644
+          created: 1783543293445
+          modified: 1783543328489
+          isPrivate: false
+          description: ""
+          sortKey: -1783543293445
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_4a4283b278ef84615515a2e49a3faee43f8a9778
+    created: 1783106637618
+    modified: 1783604359322
+  cookies:
+    - id: 3772336f-4403-4e71-80f9-c311c2a77e66
+      key: jwt
+      value: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTRhNzIxMGNiYmNlNGVlNDgxZWMxMWQiLCJyb2xlIjoiSVRfQURNSU4iLCJpYXQiOjE3ODM2MDQzNTksImV4cCI6MTc4NDIwOTE1OX0.rQAh2UIff8KGO49ZdrxWwPZD2Rx1b5ddmeC3odzL6dg
+      domain: localhost
+      path: /
+      secure: false
+      httpOnly: true
+      hostOnly: true
+environments:
+  name: Base Environment
+  meta:
+    id: env_4a4283b278ef84615515a2e49a3faee43f8a9778
+    created: 1783106637616
+    modified: 1783244466724
+    isPrivate: false
+  data:
+    baseUrl: localhost:8000/api/v1
